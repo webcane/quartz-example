@@ -1,14 +1,15 @@
 package cane.brothers.spring;
 
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
+import org.quartz.*;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
-//@PersistJobDataAfterExecution
-//@DisallowConcurrentExecution
+import java.time.LocalDateTime;
+
+@PersistJobDataAfterExecution
+@DisallowConcurrentExecution
 public class HelloworldJob extends QuartzJobBean {
 
-	HelloworldTask task;
+	private HelloworldTask task;
 
 	public void setTask(HelloworldTask task) {
 		this.task = task;
@@ -16,6 +17,7 @@ public class HelloworldJob extends QuartzJobBean {
 	
 	@Override
 	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
+        System.out.println("Cron Quartz Job started at time: "+ LocalDateTime.now());
 		task.print();
 	}
 

@@ -1,10 +1,6 @@
 (function(angular) {
   var CronFactory = function($resource) {
-    return $resource('/cron', {}, {
-      update: {
-        method: "PUT"
-      }
-    });
+    return $resource('/cron');
   };
   
   CronFactory.$inject = ['$resource'];
