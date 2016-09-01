@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+  </head>
+  
+  <body ng-app="myApp">
+    <div class="container" ng-controller="AppController">
+    
+      <div class="page-header">
+        <h1>A cron task expression</h1>
+      </div>
+      
+      <form class="form-horizontal" role="form" ng-submit="updateItem(cron.expression)">       
+        <div class="input-group">
+          <input type="text" class="form-control" ng-model="cron.expression" placeholder="Enter cron expression..." />
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="submit" ng-disabled="!cron.expression" title="Update">
+              <span class="glyphicon glyphicon-plus"></span>
+            </button>
+          </span>
+        </div>
+      </form>
+      
+    </div>
+
+    <script type="text/javascript" src="./js/jquery.js"></script>
+    <script type="text/javascript" src="./js/bootstrap.min.js"></script>	
+    <script type="text/javascript" src="./js/angular.min.js"></script>
+    <script type="text/javascript" src="./js/angular-resource.min.js"></script>
+    <script type="text/javascript" src="./app/app.js"></script>
+    <script type="text/javascript" src="./app/controllers.js"></script>
+    <script type="text/javascript" src="./app/services.js"></script>
+  </body>
+</html>
