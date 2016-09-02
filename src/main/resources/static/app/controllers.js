@@ -1,9 +1,15 @@
 (function(angular) {
   var AppController = function($scope, Cron) {
     $scope.cron = {};
+    
     Cron.get(function(response) {
-      $scope.cron.expression = response;
+      $scope.cron = response;
     });
+    
+    $scope.update = function(cron) {
+    	cron.$update();	
+    };
+    
   };
   
   AppController.$inject = ['$scope', 'Cron'];

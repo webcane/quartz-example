@@ -4,6 +4,7 @@ import cane.brothers.spring.AutowiringSpringBeanJobFactory;
 import cane.brothers.spring.HelloworldJob;
 import cane.brothers.spring.HelloworldTask;
 import org.quartz.spi.JobFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +23,12 @@ import java.util.Properties;
 
 @Configuration
 public class QuartzConfiguration {
+	
+	@Value("${quartz.crontrigger.name}") 
+	private String triggerName;
+	
+	@Value("${quartz.crontrigger.expression}") 
+	private String triggerExpression;
 
     @Bean
     public JobFactory jobFactory(ApplicationContext applicationContext) {
@@ -62,7 +69,8 @@ public class QuartzConfiguration {
 		CronTriggerFactoryBean trigger = new CronTriggerFactoryBean();
 		trigger.setJobDetail(jobDetailFactoryBean().getObject());
 		trigger.setStartDelay(3000);
-		trigger.setCronExpression("0/5 * * * * ?");
+		trigger.setCronExpression(triggerExpression);
+		trigger.setName(triggerName);
 
         // in case of misfire, ignore all missed triggers and continue :
        // trigger.setMisfireInstruction(SimpleTrigger.MISFIRE_INSTRUCTION_RESCHEDULE_NEXT_WITH_REMAINING_COUNT);
