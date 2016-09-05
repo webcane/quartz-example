@@ -23,11 +23,11 @@ import java.util.Properties;
 
 @Configuration
 public class QuartzConfiguration {
-	
-	@Value("${quartz.crontrigger.name}") 
+
+	@Value("${quartz.crontrigger.name}")
 	private String triggerName;
-	
-	@Value("${quartz.crontrigger.expression}") 
+
+	@Value("${quartz.crontrigger.expression}")
 	private String triggerExpression;
 
     @Bean

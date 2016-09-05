@@ -6,24 +6,64 @@
   
   <body ng-app="myApp">
     <div class="container" ng-controller="AppController">
-    
-      <div class="page-header">
-        <h1>A cron task expression</h1>
-      </div>
-      
-      <form class="form-horizontal" role="form" 
-      		ng-submit="update(cron)">       
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Enter cron expression..." 
-          	ng-model="cron.expression" />
-          <span class="input-group-btn">
-            <button class="btn btn-default" type="submit"  title="Update"
-            	ng-disabled="!cron.expression">
-              <span class="glyphicon glyphicon-refresh"></span>
-            </button>
-          </span>
+
+
+        <!-- Nav tabs -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active">
+            <a href="#cron" aria-controls="cron" role="tab" data-toggle="tab">Cron</a>
+        </li>
+        <li role="presentation">
+            <a href="#hours" aria-controls="hours" role="tab" data-toggle="tab">Hours</a>
+        </li>
+      </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="cron">
+
+                <div class="page-header">
+                    <h1>A cron task expression</h1>
+                </div>
+
+                <form class="form-horizontal" role="form"
+                      ng-submit="update(cron)">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Enter cron expression..."
+                               ng-model="cron.expression" />
+                      <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit"  title="Update"
+                                ng-disabled="!cron.expression">
+                          <span class="glyphicon glyphicon-refresh"></span>
+                        </button>
+                      </span>
+                    </div>
+                </form>
+
+            </div>
+
+            <div role="tabpanel" class="tab-pane fade" id="hours">
+
+                <div class="page-header">
+                    <h1>По часам</h1>
+                </div>
+
+                <form class="form-horizontal" role="form"
+                      ng-submit="update(choise)">
+
+                    <div class="radio" ng-repeat="choise in hours.choises">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="{{'optionsRadios' + choise.id}}" value="choise.value" ng-model="choise">
+                            {{choise.text}}
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-default">Обновить</button>
+                </form>
+            </div>
         </div>
-      </form>
+    
+
       
     </div>
 
