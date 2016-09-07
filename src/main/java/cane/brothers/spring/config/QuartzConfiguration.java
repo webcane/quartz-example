@@ -13,6 +13,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
+import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -25,10 +26,16 @@ import java.util.Properties;
 public class QuartzConfiguration {
 	
 	@Value("${quartz.crontrigger.name}") 
-	private String triggerName;
+	private String cronTriggerName;
 	
 	@Value("${quartz.crontrigger.expression}") 
-	private String triggerExpression;
+	private String cronTriggerExpression;
+	
+	@Value("${quartz.simpletrigger.name}") 
+	private String simpleTriggerName;
+	
+	@Value("${quartz.simpletrigger.interval}") 
+	private Long simpleTriggerInterval;	
 
     @Bean
     public JobFactory jobFactory(ApplicationContext applicationContext) {
@@ -50,7 +57,7 @@ public class QuartzConfiguration {
         scheduler.setJobFactory(jobFactory);
 
 		scheduler.setQuartzProperties(quartzProperties());
-		scheduler.setTriggers(cronTriggerFactoryBean().getObject());
+		scheduler.setTriggers(cronTriggerFactoryBean().getObject(), simpleTriggerFactoryBean().getObject());
 		scheduler.setJobDetails(jobDetailFactoryBean().getObject());
 		return scheduler;
 	}
@@ -68,9 +75,9 @@ public class QuartzConfiguration {
 	public CronTriggerFactoryBean cronTriggerFactoryBean() {
 		CronTriggerFactoryBean trigger = new CronTriggerFactoryBean();
 		trigger.setJobDetail(jobDetailFactoryBean().getObject());
-		trigger.setStartDelay(3000);
-		trigger.setCronExpression(triggerExpression);
-		trigger.setName(triggerName);
+		trigger.setStartDelay(5000);
+		trigger.setCronExpression(cronTriggerExpression);
+		trigger.setName(cronTriggerName);
 
         // in case of misfire, ignore all missed triggers and continue :
        // trigger.setMisfireInstruction(SimpleTrigger.MISFIRE_INSTRUCTION_RESCHEDULE_NEXT_WITH_REMAINING_COUNT);
@@ -100,4 +107,15 @@ public class QuartzConfiguration {
     HelloworldTask task() {
 		return new HelloworldTask();
 	}
+	
+	// Job is scheduled after every 3 sec
+	@Bean
+	public SimpleTriggerFactoryBean simpleTriggerFactoryBean() {
+		SimpleTriggerFactoryBean trigger = new SimpleTriggerFactoryBean();
+		trigger.setJobDetail(jobDetailFactoryBean().getObject());
+		trigger.setStartDelay(3000);
+		trigger.setRepeatInterval(simpleTriggerInterval * 1000L);
+		trigger.setName(simpleTriggerName);
+		return trigger;
+	}	
 }
