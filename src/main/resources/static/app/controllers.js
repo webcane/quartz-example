@@ -1,6 +1,6 @@
 (function(angular) {
 	// cron controller
-	var CronController = function($scope, Cron) {
+	var CronController = function($scope, Notification, Cron) {
 		$scope.cron = {};
 
 		Cron.get(function(response) {
@@ -9,16 +9,17 @@
 
 		$scope.update = function(cron) {
 			cron.$update();
+            Notification.primary('cron expression was updated successfully!')
 		};
 
 	};
 
-	CronController.$inject = [ '$scope', 'Cron' ];
+	CronController.$inject = [ '$scope', 'Notification', 'Cron' ];
 	angular.module("myApp.controllers").controller("CronController",
-			CronController);
+        CronController);
 
 	// simple controller
-	var SimpleController = function($scope, Simple) {
+	var SimpleController = function($scope, Notification, Simple) {
 		$scope.simple = {};
 		$scope.myChoise = {};
 
@@ -70,6 +71,7 @@
 
 		$scope.updateChoise = function() {
 			$scope.simple.$update();
+            Notification.primary('choise was updated successfully!');
 		};
 		
 		
@@ -79,7 +81,7 @@
 
 	};
 
-	SimpleController.$inject = [ '$scope', 'Simple' ];
+	SimpleController.$inject = [ '$scope', 'Notification', 'Simple' ];
 	angular.module("myApp.controllers").controller("SimpleController",
-			SimpleController);
+        SimpleController);
 }(angular));

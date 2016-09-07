@@ -1,13 +1,15 @@
 package cane.brothers.spring;
 
 import org.quartz.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.quartz.QuartzJobBean;
-
-import java.time.LocalDateTime;
 
 @PersistJobDataAfterExecution
 @DisallowConcurrentExecution
 public class HelloworldJob extends QuartzJobBean {
+
+	private static final Logger log = LoggerFactory.getLogger(HelloworldJob.class);
 
 	private HelloworldTask task;
 
@@ -17,7 +19,11 @@ public class HelloworldJob extends QuartzJobBean {
 	
 	@Override
 	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
-        System.out.println("Cron Quartz Job started at time: "+ LocalDateTime.now());
+		if(context.getTrigger() instanceof SimpleTrigger) {
+			log.info("Simple Quartz Job started");
+		} else {
+			log.error("Cron Quartz Job started");
+		}
 		task.print();
 	}
 
