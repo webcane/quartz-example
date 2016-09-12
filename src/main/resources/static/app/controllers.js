@@ -29,34 +29,38 @@
 				id : 1,
 				value : 3,
 				text : "Каждые 3ч",
-				side : "left"
+				order : 1
 			}, {
 				id : 2,
 				value : 4,
 				text : "Каждые 4ч",
-				side : "left"
+				order : 3
 			}, {
 				id : 3,
 				value : 6,
 				text : "Каждые 6ч",
-				side : "left"
+				order : 5
 			}, {
 				id : 4,
 				value : 12,
 				text : "Каждые 12ч",
-				side : "right"
+				order : 2
 			}, {
 				id : 5,
 				value : 24,
 				text : "Каждые 24ч",
-				side : "right"
+				order : 4
 			}, {
 				id : 6,
 				value : 48,
 				text : "Каждые 48ч",
-				side : "right"
+				order : 6
 			} ]
 		};
+		
+		$scope.hours.choises.sort(function(a, b) {
+			return a-b;
+		});
 
 		Simple.get(function(response) {
 			$scope.simple = response;
